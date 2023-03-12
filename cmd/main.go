@@ -2,9 +2,184 @@ package main
 import (
 	"fmt"
 	"sort"
+	"bytes"
+	"reflect"
+	"com.xcrj.goleetcode/internal/offersa/pass1"
+	"strings"
+	"unicode"
 )
 func main() {
+	test26()
+}
+func test27(){
+	//slice 实现 队列
+}
+func test26(){
+	//slice 实现 栈
+	var limit int=10
+	var stack []int=make([]int,0)
+	//push 压栈
+	for i:=0;i<3;i++{
+		stack=append(stack,i)
+	}
+	//pop 弹出
+	var val int=stack[len(stack)-1]
+	stack=stack[:len(stack)-1]
+	fmt.Println(val)
+	//peak 查看栈顶元素
+	var pk int=stack[len(stack)-1]
+	fmt.Println(pk)
+	//栈空
+	if len(stack)==0{
+		fmt.Println("栈空")
+	}
+	//栈满
+	if len(stack)>limit{
+		fmt.Println("栈满")
+	}else{
+		fmt.Println("栈未满")
+	}
+}
+func test25(){
+	//判断字母 数字
+	var a rune='a'
+	var ab bool=unicode.IsLetter(a)
+	fmt.Println(ab)
 
+	var a1 rune='2'
+	var ab1 bool=unicode.IsDigit(a1)
+	fmt.Println(ab1)
+}
+func test24(){
+	//unicode
+	//字母 大写转小写
+	var a rune='A'
+	var al rune=unicode.ToLower(a)
+	fmt.Printf("%c",al)
+	//字母 大写转小写 反之
+	var a1 rune='a'
+	var al1 rune=unicode.ToUpper(a1)
+	fmt.Printf("%c",al1)
+}
+func test23(){
+	// strings
+	//字符串 大写转小写
+	var a string="ABCD"
+	var al string=strings.ToLower(a)
+	fmt.Println(al)
+	//字符串 大写转小写 反之
+	var a1 string="abcd"
+	var al1 string=strings.ToUpper(a1)
+	fmt.Println(al1)
+}
+
+func test22(){
+	//获取变量类型
+	fmt.Println(reflect.TypeOf(pass1.MinWindow("a","a")).String())
+}
+func test21(){
+	// []rune切片转string
+	var str1 string="xcrj"
+	// 写法 强制类型转换
+	var cs []rune=[]rune(str1)
+	// 写法 强制类型转换
+	var str2 string=string(cs)
+	fmt.Println(str2)
+}
+
+func test20(){
+	// 是否存在
+	var am map[string]int=map[string]int{"xcrj":1}
+	v:=am["xcrj"]
+	fmt.Println(v)
+	_,ok:=am["xcrj"]
+	fmt.Println(ok)
+}
+
+//空结构体不占用空间
+type void struct{}
+var vv void
+
+func test19(){	
+	//创建set
+	// map[string]类型
+	var set map[string]void=make(map[string]void)
+	// set["xcrj"]=值
+	set["xcrj"]=vv
+	set["xcrj1"]=vv
+	fmt.Println(set)
+}
+
+func test18(){
+	// array to slice 
+	var as[3]int=[3]int{1,2,3}
+	var s1[]int=as[:]
+	fmt.Println(s1)
+	// slice to array
+	var bs[3]int=[3]int{}
+	copy(bs[:],s1)// copy(目的,原)
+	fmt.Println(bs)
+}
+
+func test17(){
+	// 数组判断相等
+	var a1 [3]int=[3]int{1,2,3}
+	var a2 [3]int=[3]int{1,2,3}
+	fmt.Println(a1==a2)
+
+	// byte切片判断相等
+	var bs1 []byte=[]byte{1,2,3}
+	var bs2 []byte=[]byte{1,2,3}
+	fmt.Println(bytes.Equal(bs1,bs2))
+
+	// 普通切片判断相等
+	var s1 []int=[]int{1,2,3}
+	var s2 []int=[]int{1,2,3}
+	// fmt.Println(s1==s2)
+	// 反射性能消耗大
+	fmt.Println(reflect.DeepEqual(s1,s2))
+	// 自己写判断
+	var len int=len(s1)
+	var eql bool=true
+	for i:=0;i<len;i++{
+		if(s1[i]!=s2[i]){
+			eql=false
+			break
+		}
+	}
+	fmt.Println(eql)
+
+}
+func test16(){
+	// string to []rune
+	var str string="xcrj"
+	var cs []rune=[]rune(str)
+	var c rune=cs[0]
+	// 输出字符
+	fmt.Printf("%c", c)
+}
+func test15(){
+	var astr string="xcrj"
+	fmt.Println(len(astr))
+}
+func test14(){
+	var test14 Test14=Constructor("xcrj")
+	test14.ShowName()
+}
+
+type Test14 struct{
+	// public属性
+	Name string
+}
+
+// 工厂模式创建类，静态工厂
+// public 方法
+func Constructor(name string) Test14{
+	return Test14{name}
+}
+
+func (this *Test14) ShowName(){
+	fmt.Println(this.Name)
 }
 
 func test13(){
@@ -138,6 +313,7 @@ func test2(){
 }
 
 func test1(){
+	// slice len 和 cap
 	// 1=len 2=cap
 	// a[0]默认值为0，赋值len长度的值为0
 	var a []int=make([]int,1,2)
